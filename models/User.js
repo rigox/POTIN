@@ -1,5 +1,5 @@
 const  mongoose = require("mongoose")
-const  schema =  mongoose.schema
+const  schema =  mongoose.Schema
 
 const  userSchema =  new schema({
 
@@ -12,7 +12,7 @@ email:{
      required:true
 },
 password:{
-     type:password,
+     type:String,
      required:true
 },
 
