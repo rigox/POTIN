@@ -28,7 +28,7 @@ const Login = ({logIn,isAuthenticated}) => {
        return <Redirect to="/dashboard" />
     }
     return (
-       <Fragment>
+       <Fragment className="helper-pad">
             <h1 className="large text-primary">Sign in</h1>
       <p className="lead"><i className="fas fa-user"></i> Sign into Your Account</p>
       <form className="form" action="create-profile.html"  onSubmit={e=> onSubmit(e)}>

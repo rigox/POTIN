@@ -26,8 +26,8 @@ const  App =()=>{
          return(
             <Provider store={store}>
                 <BrowserRouter>
-                <Navbar />
-                    <Fragment>
+                <Navbar className="helperpad" />
+                    <Fragment className="helperpad">
                              <Switch>
                                     <Route exact path="/" component={Login} />
                                     <Route exact path="/Register" component={Register} />   

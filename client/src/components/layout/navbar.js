@@ -1,5 +1,5 @@
 import React,{Fragment} from 'react';
-import {Link} from 'react-router-dom';
+import {Link , NavLink} from 'react-router-dom';
 import {connect} from 'react-redux';
 import PropTypes from 'prop-types'
 import {logout}  from '../../actions/auth';
@@ -17,18 +17,22 @@ const  Navbar = ({auth:{isAuthenticated,loading},logout}) =>{
 
      const guestLinks  = (
         <ul>
-        <li><Link to="profiles.html">PoTers</Link></li>
-        <li><Link to="/register">Register</Link></li>
-        <li><Link to="/">Login</Link></li>
+        <li><NavLink  to="profiles.html">PoTers</NavLink></li>
+        <li><NavLink  to="/register">Register</NavLink></li>
+        <li><NavLink  to="/">Login</NavLink></li>
       </ul>
       )
 
   return(
-    <nav className="navbar bg-dark">
+    <nav id="navbar">
+    <div class="container">
+
+   
     <h1>
-      <Link to="/"><i className="fas fa-code"></i> POTIN</Link>
+      <Link to="/"><i className="fas fa-cannabis fonthelper"></i> POTIN</Link>
     </h1>
    {!loading && (<Fragment>{isAuthenticated ? authLinks : guestLinks}</Fragment>)}
+  </div>
   </nav>
   )
 
