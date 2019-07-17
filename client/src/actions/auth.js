@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT} from './types';
 import setAuthToken from '../utils/setAuthToken'
+import {load_profile} from './profile';
 // Load User 
 export const  loadUser = () => async dispacth=>{
 
@@ -10,13 +11,14 @@ export const  loadUser = () => async dispacth=>{
  }
 
  try {
-     const  res  = await axios.get('/api/auth');
+     const  res  = await axios.get('/api/Auth/');
      dispacth({
           type:USER_LOADED,
           payload:res.data
      })
  } catch (err) {
-      dispacth({
+    console.log("error")
+    dispacth({
            type:AUTH_ERROR
       })
  }
@@ -42,12 +44,13 @@ export const Register = ({name,email,password}) => async dispacth =>{
 
      try{   
 
-         const res = await axios.post('/api/users',body,config)
+         const res = await axios.post('/api/User/register',body,config)
          dispacth({
               type:REGISTER_SUCCESS,
               payload:res.data
          })
          dispacth(loadUser())
+         dispacth(register_profile())
 
      }catch(err){
             const errors =  err.response.errors
@@ -63,6 +66,29 @@ export const Register = ({name,email,password}) => async dispacth =>{
 
 }
 
+//creates a  basic user profile after  regestering
+export const  register_profile = () => async  dispatch =>{
+       const  config = {
+             headers:{
+                  'Content-Type':'application/json'
+             }
+       }
+     let  bio= "Temporary bio"
+     let  status = "Temporary status"
+     const body =  JSON.stringify({bio,status})
+     try {
+         const res =  await axios.post('/api/Profile/',body,config);
+         console.log(res.status)
+               
+        } catch (err) {
+           console.log(err)
+            dispatch({
+                 type:REGISTER_FAIL
+            })
+        }  
+}
+
+
 //Login User
 
 export const logIn = (email,password) => async dispacth =>{
@@ -77,12 +103,13 @@ export const logIn = (email,password) => async dispacth =>{
 
      try{   
 
-         const res = await axios.post('/api/auth',body,config)
+         const res = await axios.post('/api/Auth/login',body,config)
          dispacth({
               type:LOGIN_SUCCESS,
               payload:res.data
          })
          dispacth(loadUser())
+         dispacth(load_profile())
      }catch(err){
             const errors =  err.response.errors
             if(errors){

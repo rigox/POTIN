@@ -5,6 +5,9 @@ const bcrypt =  require("bcryptjs")
 const express =  require("express")
 const router = express.Router();
 const  {check,validationResult}   =  require('express-validator/check')
+const form =  require("formidable")
+const media =   require("mediaserver")
+
 router.get("/",(req,res)=>{
 
   res.send("welcome")
@@ -26,6 +29,9 @@ router.post("/register",[
      } 
    const {name,email,password}   = req.body || req.query
    
+
+
+
    try {
        let temp = await  User.findOne({email})
        if(temp){

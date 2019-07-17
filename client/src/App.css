@@ -5,7 +5,7 @@
 }
 
 /*Utility classes*/
-.container{
+.container_mod{
    margin:auto;
    max-width: 1100px;
    overflow: auto;

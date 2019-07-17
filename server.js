@@ -2,7 +2,7 @@ const  express = require("express")
 const db =  require("./config/db")
 const app = express()
 const cors =  require("cors")
-const PORT =  process.env.PORT || 2005;
+const PORT =  process.env.PORT || 5000;
 db();
 //import routes
 const User =  require("./routes/api/User");

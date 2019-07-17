@@ -4,16 +4,22 @@ const  router =  express.Router()
 const jwt =  require("jsonwebtoken")
 const bcrypt =  require("bcryptjs")
 const config =  require("config")
+const auth =  require("../../middleware/auth");
 const  {check,validationResult}   =  require('express-validator/check')
 
-router.get('/',(req,res)=>{
-       res.send("Auth test")
-})
+router.get("/",auth, async (req,res)=>{
+     try {
+          const  user = User.findById(req.user.id).select("-password")
+     } catch (err) {
+          console.log(err)
+     }
+});
 
 router.post("/login",[
   check("email","email is required").not().isEmpty(),
   check("password","password is required").not().isEmpty()
 ],async(req,res)=>{
+     console.log("hello")
      const errors = validationResult(req)
      if(!errors.isEmpty()){
           return res.status(400).json({errors:errors.array()})

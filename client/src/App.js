@@ -27,12 +27,12 @@ const  App =()=>{
             <Provider store={store}>
                 <BrowserRouter>
                 <Navbar className="helperpad" />
-                    <Fragment className="helperpad">
+                    <div className="container">
                              <Switch>
                                     <Route exact path="/" component={Login} />
                                     <Route exact path="/Register" component={Register} />   
                               </Switch>   
-                    </Fragment>
+                    </div>
                 </BrowserRouter>
             </Provider>
          )

@@ -27,6 +27,7 @@ export default function(state=initialState,action){
             }
             
         case AUTH_ERROR:
+        
         localStorage.removeItem('token')
         return{
             ...state,

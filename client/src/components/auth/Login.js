@@ -3,10 +3,9 @@ import {Link  , Redirect} from 'react-router-dom';
 import {logIn}  from '../../actions/auth';
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {load_profile} from '../../actions/profile';
 
-import axios from 'axios';
-
-const Login = ({logIn,isAuthenticated}) => {
+const Login = ({logIn,isAuthenticated,load_profile}) => {
     const [formData,setFormData]   = useState({
         email:'',
         password:'',
@@ -27,40 +26,51 @@ const Login = ({logIn,isAuthenticated}) => {
     if(isAuthenticated){
        return <Redirect to="/dashboard" />
     }
-    return (
-       <Fragment className="helper-pad">
-            <h1 className="large text-primary">Sign in</h1>
-      <p className="lead"><i className="fas fa-user"></i> Sign into Your Account</p>
-      <form className="form" action="create-profile.html"  onSubmit={e=> onSubmit(e)}>
-        <div className="form-group">
-          <input type="email" placeholder="Email Address"  value={email} onChange={e=> onChange(e)} name="email" />
+    return (     
+    
+<div class="container">
+    <div class="row">
+      <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+        <div class="card card-signin my-5">
+          <div class="card-body">
+            <h5 class="card-title text-center">Sign In</h5>
+            <form class="form-signin" onSubmit={e=>onSubmit(e)} >
+              <div class="form-label-group">
+                <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address"  onChange={e=> onChange(e) }  required autofocus />
+                <label for="inputEmail">Email address</label>
+              </div>
+
+              <div class="form-label-group">
+                <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" onChange={e=> onChange(e) } required />
+                <label for="inputPassword">Password</label>
+              </div>
+
+              <div class="custom-control custom-checkbox mb-3">
+                <input type="checkbox" class="custom-control-input" id="customCheck1" />
+                <label class="custom-control-label" for="customCheck1">Remember password</label>
+              </div>
+              <button class="btn btn-lg btn-success btn-block text-uppercase" type="submit" >Sign in</button>
+              <hr class="my-4" />
+            
+            </form>
+          </div>
         </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            minLength="6"
-            value={password}
-            onChange={e=> onChange(e)}
-          />
-        </div>
-        <input type="submit" className="btn btn-primary" value="Login" />
-      </form>
-      <p className="my-1">
-        Dont Have And Accouunt? <Link to="/register">SignUp</Link>
-      </p>
-       </Fragment>
+      </div>
+    </div>
+  </div>
+
+
     )
 }
 
 Login.propTypes  ={
   login:PropTypes.func.isRequired,
-  isAuthenticated: PropTypes.bool
+  isAuthenticated: PropTypes.bool,
+  load_profile:PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => ({
    isAuthenticated:state.auth.isAuthenticated
 })
 
-export default connect(mapStateToProps,{logIn})(Login);
+export default connect(mapStateToProps,{logIn,load_profile})(Login);

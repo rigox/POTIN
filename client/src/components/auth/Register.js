@@ -34,41 +34,44 @@ const SignUp = ({setAlert,Register,isAuthenticated}) => {
          return <Redirect  to="/dashboard"/>
       }
     return (
-       <Fragment>
-            <h1 className="large text-primary">Sign Up</h1>
-      <p className="lead"><i className="fas fa-user"></i> Create Your Account</p>
-      <form className="form" action="create-profile.html"  onSubmit={e=> onSubmit(e)}>
-        <div className="form-group">
-          <input type="text" placeholder="Name" value={name} onChange={e=> onChange(e)} name="name" required />
+        <div class="container">
+        <div class="row">
+          <div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+            <div class="card card-signin my-5">
+              <div class="card-body">
+                <h5 class="card-title text-center">Register</h5>
+                <form class="form-signin" onSubmit={e=>onSubmit(e)} >
+                
+                <div class="form-label-group">
+                    <input type="text" id="inputEmail" name ="name" class="form-control" placeholder="Enter Name"  onChange={e=> onChange(e) }  required autofocus />
+                    <label for="inputEmail">Enter Name</label>
+                  </div>
+                
+                  <div class="form-label-group">
+                    <input type="email" id="inputEmail" name ="email" class="form-control" placeholder="Email address"  onChange={e=> onChange(e) }  required autofocus />
+                    <label for="inputEmail">Email address</label>
+                  </div>
+    
+                  <div class="form-label-group">
+                    <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" onChange={e=> onChange(e) } required />
+                    <label for="inputPassword">Password</label>
+                  </div>
+                  <div class="form-label-group">
+                    <input type="password" id="inputPassword" name="password2" class="form-control" placeholder="Confirm Password" onChange={e=> onChange(e) } required />
+                    <label for="inputPassword">Confirm password</label>
+                  </div>
+              
+                 
+                  <button class="btn btn-lg btn-success btn-block text-uppercase" type="submit" >Register</button>
+                  <hr class="my-4" />
+                
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="form-group">
-          <input type="email" placeholder="Email Address"  value={email} onChange={e=> onChange(e)} name="email" />
-          
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Password"
-            name="password"
-            minLength="6"
-            value={password}
-            onChange={e=> onChange(e)} />
-        </div>
-        <div className="form-group">
-          <input
-            type="password"
-            placeholder="Confirm Password"
-            name="password2"
-            minLength="6"
-            value={password2}
-            onChange={e=> onChange(e)}/>
-        </div>
-        <input type="submit"  className="btn btn-primary" value="Register" />
-      </form>
-      <p className="my-1">
-        Already have an account? <Link to="/login">Sign In</Link>
-      </p>
-       </Fragment>
+      </div>
+    
     )
 }
 
