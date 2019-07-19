@@ -8,7 +8,7 @@ export default function(state=initial_state,action){
     const {type,payload} = action
     switch(type){
           case LOAD_PROFILE:
-            return{...state ,...payload,user:"water"}
+            return{...state ,...payload}
           default:
           return state
     }

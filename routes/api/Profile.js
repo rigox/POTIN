@@ -5,7 +5,9 @@ const User =  require("../../models/User")
 const auth = require("../../middleware/auth")
 const  {check,validationResult}   =  require('express-validator/check')
 const config =  require("config")
-
+const form =  require("formidable")
+const media =   require("mediaserver")
+const fs =  require("fs")
 
 //@router GET api/profile/me
 //@desc get current user profile
@@ -13,7 +15,7 @@ const config =  require("config")
 
 router.get("/me",auth,async (req,res)=>{
       try {
-          profile  =  await  Profile.findOne({user:req.user.id})
+          profile  =  await  Profile.findOne({user:req.user.id}).populate('user',['name','email'])
  
           if(!profile){
             return res.status(400).json({msg:"there is no profile for this user"})
@@ -108,5 +110,22 @@ router.delete("/",auth,async(req,res)=>{
           res.status(500).send("server error")
      }
 })
+
+//@router Post api/Profile/change_photo
+//@desc uploads a user photo to the media  folder
+//@access Private
+
+router.post("/change_photo",auth, (req,res)=>{
+     let f = new form.IncomingForm()
+     f.parse(req,(err,fields,files)=>{
+         if(err) throw err;
+        var path =  __dirname + '/pictures/'+files.profile_photo.name;
+        const readStream = fs.createReadStream(files.profile_photo.path)
+        const writeStream =  fs.createWriteStream(path)
+        readStream.pipe(writeStream)
+     })
+
+});
+
 
  module.exports = router;

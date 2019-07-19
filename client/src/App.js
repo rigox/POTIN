@@ -7,6 +7,7 @@ import store from './store';
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Navbar from './components/layout/navbar';
+import Dashboard from './components/profile/Dashboard';
 import './App.css';
 //redux
 import {loadUser} from './actions/auth'
@@ -30,6 +31,7 @@ const  App =()=>{
                     <div className="container">
                              <Switch>
                                     <Route exact path="/" component={Login} />
+                                    <Route exact path="/dashboard" component={Dashboard} />
                                     <Route exact path="/Register" component={Register} />   
                               </Switch>   
                     </div>

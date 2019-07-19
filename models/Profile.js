@@ -15,6 +15,15 @@ const profileSchema = new Schema({
         required:true
     }
   ,
+  strain:{
+          type:String
+  },
+  artist:{
+         type:String  
+  },
+  profession:{
+          type:String
+  },
   date:{
        type:Date,
        default:new Date().toUTCString()

@@ -24,3 +24,8 @@ export  const load_profile = () =>  async dispatch =>{
       
 
 }
+
+//action to change profiles picture
+export const change_photo = () => async dispatch =>{
+
+}
