@@ -1,4 +1,4 @@
-import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT,LOAD_PROFILE} from '../actions/types'
+import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT,LOAD_PROFILE,EDIT_PROFILE} from '../actions/types'
 
 const initial_state ={
   user:"None"
@@ -9,7 +9,9 @@ export default function(state=initial_state,action){
     switch(type){
           case LOAD_PROFILE:
             return{...state ,...payload}
-          default:
+           case EDIT_PROFILE:
+           return {...state,...payload}
+            default:
           return state
     }
 }

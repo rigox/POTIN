@@ -1,17 +1,43 @@
-import React from 'react'
+import React , {useState} from 'react'
 import {connect}  from  'react-redux'
+import {Redirect}  from 'react-router-dom'
 import PropTypes from 'prop-types'
+const axios = require("axios")
 
-const Dashboard = ({profile}) => {
+const Dashboard = ({profile , history}) => {
+
+    const toEdit  = useState(false);
+    function test(){
+          return "https://cdn1.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
+    }
+
+    function load_photo(key){
+        const config  ={
+              headers:{
+                   'Content-Content':'application/json'
+              }
+        }
+       
+        console.log(key)
+
+        return axios.get("/api/Profile/fetch_photo",{
+            params:{
+                 key:key
+            }
+        },config)
+    }
+ 
+
     return (
+
         <div class="container emp-profile">
         <form method="post">
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS52y5aInsxSm31CvHOFHWujqUx_wWTS9iM6s7BAm21oEN_RiGoog" alt=""/>
+                        <img src={load_photo(profile.photo_path)} alt=""/>
                         <div class="file btn btn-lg btn-primary">
-                            Change Photo
+                            
                             <input type="file" name="profile_photo"/>
                             
                         </div>
@@ -37,7 +63,7 @@ const Dashboard = ({profile}) => {
                     </div>
                 </div>
                 <div class="col-md-2">
-                    <input type="submit" class="profile-edit-btn" name="edit_profile" value="Edit Profile"/>
+                    <input type="button" class="profile-edit-btn" name="edit_profile" value="Edit Profile" onClick={e=>{history.push("/edit")}}  />
                 </div>
             </div>
             <div class="row">

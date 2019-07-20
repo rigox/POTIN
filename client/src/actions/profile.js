@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT,LOAD_PROFILE} from './types';
+import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT,LOAD_PROFILE,EDIT_PROFILE} from './types';
 import setAuthToken from '../utils/setAuthToken'
 
 export  const load_profile = () =>  async dispatch =>{
@@ -25,7 +25,34 @@ export  const load_profile = () =>  async dispatch =>{
 
 }
 
-//action to change profiles picture
-export const change_photo = () => async dispatch =>{
+//action to edit a profile
+
+export const   edit_profile= () => async dispatch =>{
+  
+    const   config  = {
+        headerd:{
+             'Content-Type':"application/json"
+        }
+  }
+
+  const  body = {
+
+  }
+try {
+
+    const res =  await  axios.post('/Profile',body,config) 
+
+    dispatch({
+            type:LOAD_PROFILE,
+            payload:res.data        
+    });
+
+    
+} catch (err) {
+    console.log(err)
 
 }
+
+
+}
+

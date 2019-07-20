@@ -8,7 +8,8 @@ const config =  require("config")
 const form =  require("formidable")
 const media =   require("mediaserver")
 const fs =  require("fs")
-
+const helper  =  require("../../middleware/media")
+const  p =  require("path")
 //@router GET api/profile/me
 //@desc get current user profile
 //@access Public
@@ -50,8 +51,11 @@ check("bio","bio is required").not().isEmpty()
 
  try {
      let profile =  await Profile.findOne({user:req.user.id})
-        if(profile){
-            profile  = await Profile.findByIdAndUpdate(
+
+     if(profile){
+       let   photo_path =  await  helper.change_photo(req)
+       propFields.photo_path =  photo_path
+        profile  = await Profile.findByIdAndUpdate(
                 {user:req.user.id},
                 {$set:propFields},
                 {new:true}
@@ -114,18 +118,37 @@ router.delete("/",auth,async(req,res)=>{
 //@router Post api/Profile/change_photo
 //@desc uploads a user photo to the media  folder
 //@access Private
-
 router.post("/change_photo",auth, (req,res)=>{
-     let f = new form.IncomingForm()
+    let f = new form.IncomingForm()
      f.parse(req,(err,fields,files)=>{
-         if(err) throw err;
-        var path =  __dirname + '/pictures/'+files.profile_photo.name;
+         if(err){throw err}
+         console.log(req.body)
+        var path =  p.join(__dirname ,'../../pictures/',files.profile_photo.name)
         const readStream = fs.createReadStream(files.profile_photo.path)
         const writeStream =  fs.createWriteStream(path)
         readStream.pipe(writeStream)
-     })
 
+        Profile.update({user:req.user.id},{'photo_path':path}).then(user=>{
+                res.send(path)
+        }).catch(err=>{console.log(err)})
+
+        res.send(path)
+    })
 });
+//@router get api/Profile/fetch_photo
+//@desc fetches the current  user profile
+//@access Private
+router.get('/fetch_photo',(req,res)=>{
+    console.log("fetching_photo")
+    console.log(req.query)
+    const path  =  String(req.query.key)
+    res.writeHead(200,{'Content-Type':'image/jpg'})
+    var fileReader  =   fs.createReadStream(path)
+    fileReader.pipe(res)
+})
+
 
 
  module.exports = router;
+
+ 

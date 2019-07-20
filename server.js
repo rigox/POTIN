@@ -9,7 +9,7 @@ const User =  require("./routes/api/User");
 const Auth =  require("./routes/api/Auth");
 const Profile = require("./routes/api/Profile");
 //middleware setup
-app.use(express.urlencoded(),express.json())
+app.use(express.urlencoded({extended:true}),express.json())
 app.use(cors())
 
 

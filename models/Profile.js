@@ -24,6 +24,18 @@ const profileSchema = new Schema({
   profession:{
           type:String
   },
+  movie:{
+        type:String
+  },
+  song:{
+        type:String
+  },
+  smoking_since:{
+        type:String
+  },
+  photo_path:{
+         type:String
+  },
   date:{
        type:Date,
        default:new Date().toUTCString()
