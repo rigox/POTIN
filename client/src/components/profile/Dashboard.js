@@ -2,31 +2,16 @@ import React , {useState} from 'react'
 import {connect}  from  'react-redux'
 import {Redirect}  from 'react-router-dom'
 import PropTypes from 'prop-types'
+import {load_photo}  from '../../actions/media'
 const axios = require("axios")
 
-const Dashboard = ({profile , history}) => {
+const Dashboard = ({profile , history,load_photo , media}) => {
 
-    const toEdit  = useState(false);
-    function test(){
-          return "https://cdn1.medicalnewstoday.com/content/images/articles/322/322868/golden-retriever-puppy.jpg"
-    }
+    const [toEdit,profile_photo]  = useState(false);
+    
 
-    function load_photo(key){
-        const config  ={
-              headers:{
-                   'Content-Content':'application/json'
-              }
-        }
-       
-        console.log(key)
 
-        return axios.get("/api/Profile/fetch_photo",{
-            params:{
-                 key:key
-            }
-        },config)
-    }
- 
+    
 
     return (
 
@@ -35,7 +20,7 @@ const Dashboard = ({profile , history}) => {
             <div class="row">
                 <div class="col-md-4">
                     <div class="profile-img">
-                        <img src={load_photo(profile.photo_path)} alt=""/>
+                        <img src={media.path} alt=""/>
                         <div class="file btn btn-lg btn-primary">
                             
                             <input type="file" name="profile_photo"/>
@@ -181,10 +166,16 @@ const Dashboard = ({profile , history}) => {
     )
 }
 
+Dashboard.propTypes  ={
+    load_photo:PropTypes.func.isRequired
+  }
+  
+
 function mapStateToProps(state){
        return{
-             profile:state.profile
+             profile:state.profile,
+             media : state.media
        }
 }
 
-export default connect(mapStateToProps)(Dashboard)
+export default connect(mapStateToProps,{load_photo})(Dashboard)

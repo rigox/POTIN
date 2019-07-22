@@ -135,17 +135,36 @@ router.post("/change_photo",auth, (req,res)=>{
         res.send(path)
     })
 });
+
 //@router get api/Profile/fetch_photo
 //@desc fetches the current  user profile
 //@access Private
 router.get('/fetch_photo',(req,res)=>{
     console.log("fetching_photo")
     console.log(req.query)
-    const path  =  String(req.query.key)
+    const path  =  String(req.query.path)
     res.writeHead(200,{'Content-Type':'image/jpg'})
     var fileReader  =   fs.createReadStream(path)
     fileReader.pipe(res)
 })
+//@router get api/Profile/photo_path
+//@desc fetches the path for trhe users profile
+//@access Private
+router.get('/photo_app',auth,async (req,res)=>{
+  
+    try {
+        let profile =  await Profile.findOne({user:req.user.id})
+        if(!profile){
+          return res.status(400).json({msg:"there is no profile for this user"})
+    }
+     console.log("photo",profile.photo_path)
+     res.send(profile.photo_path)
+    } catch (err) {
+         console.log(err)
+    }
+  
+});
+
 
 
 

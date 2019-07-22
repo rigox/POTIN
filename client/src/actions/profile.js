@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {REGISTER_FAIL,REGISTER_SUCCESS,USER_LOADED,AUTH_ERROR,LOGIN_FAIL,LOGIN_SUCCESS,LOGOUT,LOAD_PROFILE,EDIT_PROFILE} from './types';
 import setAuthToken from '../utils/setAuthToken'
+import {load_photo} from './media'
 
 export  const load_profile = () =>  async dispatch =>{
  
@@ -17,7 +18,8 @@ export  const load_profile = () =>  async dispatch =>{
         type:LOAD_PROFILE,
         payload: res.data
     })    
-    } catch (err) {
+    dispatch(load_photo())
+} catch (err) {
         console.log(err)
     }
     
