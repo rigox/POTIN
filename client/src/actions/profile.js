@@ -29,23 +29,28 @@ export  const load_profile = () =>  async dispatch =>{
 
 //action to edit a profile
 
-export const   edit_profile= () => async dispatch =>{
+export const   edit_profile= ({bio , strain ,  artist,song ,  movie , name, profession ,  smoking_since , form_data  }) => async dispatch =>{
   
-    const   config  = {
-        headerd:{
-             'Content-Type':"application/json"
-        }
-  }
+    if(localStorage.token){
+         setAuthToken(localStorage.token)
+    }
+   const body  =  JSON.stringify({bio , strain , artist,song ,  movie , name, profession ,  smoking_since , form_data})
 
-  const  body = {
+   const config  ={
+    headers:{
+         'Content-Type':'application/json'
+    }
+}
+const config2 = {
+    headers: { 'content-type': 'multipart/form-data' }
+}
 
-  }
 try {
 
-    const res =  await  axios.post('/Profile',body,config) 
-
+    const res =  await  axios.post('/api/Profile/',body,config) 
+    const res2  = await  axios.post('/api/Profile/change_photo',form_data,config)
     dispatch({
-            type:LOAD_PROFILE,
+            type:EDIT_PROFILE,
             payload:res.data        
     });
 

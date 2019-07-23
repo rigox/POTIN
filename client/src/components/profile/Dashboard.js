@@ -109,6 +109,30 @@ const Dashboard = ({profile , history,load_photo , media}) => {
                                             <p>{profile.profession}</p>
                                         </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Favorite Movie: </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{profile.movie}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Favorite Song: </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{profile.song}</p>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label>Smoking since: </label>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <p>{profile.smoking_since}</p>
+                                        </div>
+                                    </div>
                         </div>
                         <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                     <div class="row">

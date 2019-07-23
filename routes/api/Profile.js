@@ -10,6 +10,8 @@ const media =   require("mediaserver")
 const fs =  require("fs")
 const helper  =  require("../../middleware/media")
 const  p =  require("path")
+const mongoose = require("mongoose")
+
 //@router GET api/profile/me
 //@desc get current user profile
 //@access Public
@@ -34,29 +36,32 @@ router.get("/me",auth,async (req,res)=>{
 //@desc P create or update a  users profile
 //@access Private
 
-router.post("/",[auth,
-check("status","status is required").not().isEmpty(),
-check("bio","bio is required").not().isEmpty()
-], async (req,res)=>{
-    const errors =  validationResult(req)
-    if(!errors.isEmpty()){
-          return  res.status(400).json({erros: errors.array()})
-    }
-  const {bio,status} = req.body || req.status;
+router.post("/",auth, async (req,res)=>{
+
+  const {bio,status,name,profession ,movie,artist,song,smoking_since ,strain} = req.body || req.status;
   const propFields  ={}
   propFields.user =  req.user.id
  if(bio) propFields.bio =  bio
  if(status) propFields.status =  status 
+ if(name)  propFields.name =  name 
+ if(profession)  propFields.profession =  profession
+ if(strain) propFields.strain =  strain 
+ if(artist) propFields.artist  = artist
+ if(song)   propFields.song =  song
+ if(smoking_since) propFields.smoking_since = smoking_since
+ if(movie) propFields.movie =  movie
+
  console.log("here",propFields)
 
  try {
-     let profile =  await Profile.findOne({user:req.user.id})
+
+     let profile =  await Profile.findOne({user: req.user.id })
 
      if(profile){
-       let   photo_path =  await  helper.change_photo(req)
-       propFields.photo_path =  photo_path
-        profile  = await Profile.findByIdAndUpdate(
-                {user:req.user.id},
+       //let   photo_path =  await  helper.change_photo(req)
+       //propFields.photo_path =  photo_path
+        profile  = await Profile.findOneAndUpdate(
+                {user: req.user.id},
                 {$set:propFields},
                 {new:true}
             );
@@ -122,14 +127,13 @@ router.post("/change_photo",auth, (req,res)=>{
     let f = new form.IncomingForm()
      f.parse(req,(err,fields,files)=>{
          if(err){throw err}
-         console.log(req.body)
         var path =  p.join(__dirname ,'../../pictures/',files.profile_photo.name)
         const readStream = fs.createReadStream(files.profile_photo.path)
         const writeStream =  fs.createWriteStream(path)
         readStream.pipe(writeStream)
 
         Profile.update({user:req.user.id},{'photo_path':path}).then(user=>{
-                res.send(path)
+              console.log(files)
         }).catch(err=>{console.log(err)})
 
         res.send(path)
